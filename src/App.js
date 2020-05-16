@@ -11,7 +11,6 @@ console.log(process.env.REACT_APP_API_KEY);
 
 const App = () => {
 
-  // Tutorial : https://www.youtube.com/watch?v=ufodJVcpmps
   // Commencer par installer : npm i axios
 
   // étape 1 :
