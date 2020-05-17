@@ -7,15 +7,13 @@ import Popup from './Components/Popup';
 
 import axios from 'axios';
 
-console.log(process.env.REACT_APP_API_KEY);
-
 const App = () => {
 
   // Commencer par installer : npm i axios
 
   // étape 1 :
   // API http://www.omdbapi.com/apikey.aspx
-  const API_URL = "http://www.omdbapi.com/?apikey=" + process.env.REACT_APP_API_KEY;
+  const API_URL = "https://www.omdbapi.com/?apikey=" + process.env.REACT_APP_API_KEY;
 
 
   // On crée un state avec les propriétés qu'on va manipuler par la suite : 
@@ -30,7 +28,7 @@ const App = () => {
   const searchMovie = (e) => {
     if (e.key === "Enter") {
       axios(API_URL + "&s=" + state.search).then(({data}) => {
-        console.log(data);
+        // console.log(data);
         let result = data.Search;
 
         // on récupère les informations de data.Search qu'on stocke dans une variable et puis on l'affecte à la propriété results de l'objet state qui est un tableau vide par défaut. 
