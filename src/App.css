@@ -186,6 +186,11 @@ section {
     width: 100%;
   }
 
+  .searchbox {
+    width: 90%;
+    margin: 0 auto;
+  }
+
   .results .resultForOne {
     width: 94%;
     margin: 0 auto;
@@ -205,6 +210,11 @@ section {
 
   .App {
     width: 100%;
+  }
+  
+  .searchbox {
+    width: 90%;
+    margin: 0 auto;
   }
 
   .results .resultForOne {
