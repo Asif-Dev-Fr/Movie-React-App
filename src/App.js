@@ -16,39 +16,36 @@ const App = () => {
   const API_URL = "https://www.omdbapi.com/?apikey=" + process.env.REACT_APP_API_KEY;
 
 
-  // On crée un state avec les propriétés qu'on va manipuler par la suite : 
-  const [state, setState] = useState({
-    search: "",
-    results: [],
-    selected: {}
-  });
+  // On crée des hooks avec des propriétés et des méthodes qu'on va manipuler par la suite : 
+  const [search, setSearch] = useState("");
+
+  const [results, setResults] = useState([]);
+
+  const [selected, setSelected ] = useState('');
+  
 
   // rechercher les éléments taper dans recherche depuis l'api 
   // les données sont dans une array et le chemin est data[data][Search] donc on mettant data entre accolade dans le .then, on rentre dans le 2ème data
   const searchMovie = (e) => {
     if (e.key === "Enter") {
-      axios(API_URL + "&s=" + state.search).then(({data}) => {
+      axios(API_URL + "&s=" + search).then(({data}) => {
         // console.log(data);
         let result = data.Search;
 
         // on récupère les informations de data.Search qu'on stocke dans une variable et puis on l'affecte à la propriété results de l'objet state qui est un tableau vide par défaut. 
-        setState(prevState => {
-          return {...prevState, results : result}
-        })
+        setResults(result);
       })
     }
   }
 
   // la fonction recherche : 
   const handleInput = (e) => {
-    let search = e.target.value;
+    let searchResult = e.target.value;
       
     // on récupère l'ancienne valeur et on l'a change avec la nouveau valeur qu'on récupère avec e.target.value
-    setState(prevState => {
-      return { ...prevState, search : search }
-    });
+    setSearch(searchResult);
 
-    // console.log(state.search);
+   // console.log(search);
   }
 
   // Fonction pour sélectionner un film en particulier : 
@@ -57,16 +54,13 @@ const App = () => {
     axios(API_URL + "&i=" + id).then(({data}) => {
       let finding = data;
 
-      setState(prevState => {
-        return {...prevState, selected: finding}
-      });
+      setSelected(finding);
     });
   }
 
   const closePopup = () => {
-    setState(prevState => {
-      return {...prevState, selected : {}}
-    });
+
+    setSelected({});
   }
 
   return (
@@ -80,16 +74,16 @@ const App = () => {
 
         {/* Condition ternaire pour voir si l'utilisateur a bien tapé le nom d'un film existant : */}
         {
-          (typeof state.results != "undefined") ?
-          (<Results results={state.results} openPopup={openPopup}/>) :
+          (typeof results != "undefined") ?
+          (<Results results={results} openPopup={openPopup}/>) :
           <div className="errorMovie">Movie not found</div>
         }
         
 
         {/* Condition pour déterminer si on a recherché quelque chose et si c'est le cas, on affiche les informations depuis le component Popup.js */}
         {
-          (typeof state.selected.Title != "undefined" ) ? 
-          <Popup selected={state.selected} closePopup={closePopup}/> : false 
+          (typeof selected.Title != "undefined" ) ? 
+          <Popup selected={selected} closePopup={closePopup}/> : false 
         }
 
       </main>
